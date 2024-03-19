@@ -188,7 +188,8 @@ def display_employees_in_department():
 create_tables()
 def main_menu():
     while True:
-        print("/nMain Menu: ")
+        print("")
+        print("Main Menu: ")
         print("1. Create or update an employee ")
         print("2. Display an employee's record ")
         print("3. Display all employee's in a department ")
@@ -206,7 +207,6 @@ def main_menu():
         else:
             print("Invalid option. Please try again.") 
             
-
 main_menu()
         
                     
