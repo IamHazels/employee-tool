@@ -34,14 +34,14 @@ class Level(Enum):
 
 class Employee:
     
-    def __init__(self, name, employee_code, department):
+    def __init__(self, name, department, employee_code):
         self._name = name
-        self._employee_code = employee_code
         self._department = department
+        self._employee_code = employee_code
         self.disciplinary_records = []
     
     def add_disciplinary_record(self,reason, level, expiry_months):
-        record = DisciplinaryRecord(self._name, self._employee_code, self._department, reason, level, expiry_months)
+        record = DisciplinaryRecord(self._name, self._department, self._employee_code, reason, level, expiry_months)
         self.disciplinary_records.append(record)
         
     def count_disciplinaries(self):
@@ -93,14 +93,14 @@ def employee_exists(instance):
         
 
 def create_or_update_employee():
-    print("1. Create a new employee")
+    print("1. Create a new employee record and disciplinary")
     print("2. Add disciplinary record to an existing employee")
     option = input("Enter your choice: ")
     
     if option == "1":
-        name = input("Enter the name of the employee: ")
-        department = input("Enter the department of the employee: ")
-        employee_code = input("Enter the employee code: ")
+        name = input("Enter the name of the employee: ").lower()
+        department = input("Enter the department of the employee: ").lower()
+        employee_code = input("Enter the employee code: ").lower()
         employee = Employee(name, department, employee_code)
         employee.add_disciplinary_from_input()
         insert_or_update_employee_to_db(employee)
@@ -123,7 +123,7 @@ def create_or_update_employee():
             print("Employee not found. ")
             
 def display_employee_records():
-    name_or_code = input("Enter employee name or employee code: ")
+    name_or_code = input("Enter employee name or employee code: ").lower()
     connection = sqlite3.connect("employees.sqlite")
     cursor = connection.cursor()
     cursor.execute(''' SELECT * FROM Employee WHERE name=? OR employee_code=?''',(name_or_code, name_or_code))
@@ -185,6 +185,7 @@ def display_employees_in_department():
         print("No employees were found for this department. ")
         
 
+create_tables()
 def main_menu():
     while True:
         print("/nMain Menu: ")
@@ -205,7 +206,7 @@ def main_menu():
         else:
             print("Invalid option. Please try again.") 
             
-create_tables()
+
 main_menu()
         
                     
